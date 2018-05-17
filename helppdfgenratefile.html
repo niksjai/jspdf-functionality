@@ -1,0 +1,272 @@
+<html>
+<!--<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>  --->
+<style>  
+       body {
+    font-family: "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+.dataset {
+    float: left;
+    vertical-align: top;
+}
+.widget {
+    display: inline-block;
+    background-color: white;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    </style> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.60/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js" type="text/javascript"></script>
+<script src="https://superal.github.io/canvas2image/canvas2image.js" type="text/javascript"></script>
+<script>
+$(document).ready(function() {
+callAuditoMasterNo();
+});//document.ready closed 
+var theCanvas="";
+var imgageData="";
+var imgageDatafinal=[];
+var thyCanvas=[];
+var imageget=[];
+var myCanvas="";
+var arrayobj=[];
+$(document).on('click','#cmdFinalPDF',function () {
+//formtoPDF1();
+formtoPDF();
+});   
+$(document).on('click','#btnSaveNew', function () {
+$('#imgoutnjappendingdiv').children('div').each(function () {
+var xyz=this.innerHTML;
+arrayobj.push(xyz);
+});
+$(document).on('click','#btngenrateCanvas', function () {
+$.each(arrayobj, function( index, value ) {
+var genratediv="<div id='divtohtml_"+index+"'>"+value+"</div>";
+var genratedivforCanvas="<div id='divtoCanvas_"+index+"'></div>";
+$("#staticdivforElement").append(genratediv);
+$("#staticdivforCANVAS").append(genratedivforCanvas);
+var check=html2canvas($("#divtohtml_"+index+""), {
+            onrendered: function(canvas) {
+                myCanvas = canvas; 
+                thyCanvas.push(myCanvas);
+                $("#divtoCanvas_"+index+"").append(canvas);
+                }
+ });  
+ });//end of each..
+  html2canvas($("#divtohtml_0"), {
+            onrendered: function(canvas) {
+                myCanvas1 = canvas; 
+                //thyCanvas.push(myCanvas);
+                $("#divtoCanvas_0").append(canvas);
+                }});
+
+               html2canvas($("#divtohtml_1"), {
+            onrendered: function(canvas) {
+                myCanvas2 = canvas; 
+                //thyCanvas.push(myCanvas);
+                $("#divtoCanvas_1").append(canvas);
+                }});
+                html2canvas($("#divtohtml_2"), {
+            onrendered: function(canvas) {
+                myCanvas3 = canvas; 
+                //thyCanvas.push(myCanvas);
+                $("#divtoCanvas_2").append(canvas);
+                }});
+});
+  });
+/*================================================================================================================================================================*/
+ /*function formtoPDF1() {
+ alert("formtoPDF1() called");
+      var doc = new jsPDF();
+      var getthycanvas=thyCanvas;
+      var getimages=[];
+      var imgGg="";
+      var xynj="";
+      var holdv="";
+      var gethold="";
+       var specialElementHandlers = {
+        '#loadVar': function(element, renderer) {
+          return true;
+        }
+      };
+      xynj=getvalue.toDataURL("image/png")
+      doc.addImage(,'JPEG', 15, 40, 180, 180) 
+      $.each(getthycanvas, function( index, getvalue ) {
+      
+	    doc.fromHTML(, 15, 15, {
+        'width': 170,
+        'elementHandlers': specialElementHandlers
+      });
+      });
+       //});
+      doc.output('save', 'Downloadnj.pdf');
+    }*/
+    
+    function formtoPDF() {
+ alert("formtoPDF() called");
+      var doc = new jsPDF();
+      var getthycanvas=thyCanvas;
+      alert("getthycanvas="+getthycanvas);
+      var getimages=[];
+      //var xynj="";
+      var imgfdfdsfg = [];
+      var xynj="";
+      $.each(thyCanvas, function( index, getvalue ) {
+	      alert( index + ":njnjnj " + getvalue);
+	      xynj=getvalue.toDataURL("image/png");
+	      //alert(xynj);
+	      imgfdfdsfg=doc.addImage(xynj, 'JPEG', 15, 40, 180, 180);
+	     // console.log(imgfdfdsfg);
+	      //alert("imgfdfdsfg=" + imgfdfdsfg);
+	      getimages.push(imgfdfdsfg);
+      });  //alert( index + ":njnjnj " + value );
+      //njiec=thyCanvas.toDataURL("image/png");
+      //addimagevalue=doc.addImage(njiec, 'JPEG', 15, 40, 180, 180);
+     //var imoData = theCanvas.toDataURL("image/png");
+     // var pdfPart1 =doc.addImage($("#divtoCanvas_0"), 'JPEG', 15, 40, 180, 180);
+     // var pdfPart2 =doc.addImage($("#divtoCanvas_1"), 'JPEG', 15, 40, 180, 180);
+    //  var pdfPart3 =doc.addImage($("#divtoCanvas_2"), 'JPEG', 15, 40, 180, 180);
+
+      var specialElementHandlers = {
+        '#loadVar': function(element, renderer) {
+          return true;
+        }
+      };
+      
+      alert("specialElementHandlers ="+specialElementHandlers);
+      console.log(specialElementHandlers);
+      //alert("getimages===="+getimages);
+      /* $.each(getimages, function( index, getvalues ) {
+      alert( index + ":njnjnj " + getvalue);
+      
+          }); */
+          /*var getvaluenj=""; 
+          $.each(getimages, function(index, getvaluenj ) {
+         // alert(index);
+          ++getvaluenj[index];//+getimages[1]+getimages[2];
+          //alert("internal gettv"+gettv);
+          });
+          alert("getv=="+getvaluenj);*/ 
+         // var consolidatedvalue=getimages[0]+getimages[2]+getimages[1];
+         // var consolidatedvaluebydiv=$("#divtoCanvas_0")+$("#divtoCanvas_1")+$("#divtoCanvas_2");
+          //alert("consolidatedvalue=="+consolidatedvalue+""+consolidatedvaluebydiv); 
+          //console.log(consolidatedvalue);
+          //console.log(consolidatedvaluebydiv);
+          var nj=$("#iframdiv").value;
+          alert("nj="+nj);
+          console.log(nj);
+      doc.fromHTML(myCanvas1+myCanvas2+myCanvas3, 15, 15, {
+        'width': 170,
+        'elementHandlers': specialElementHandlers
+      });
+      console.log(doc);
+      doc.output('save', 'Downloadnj.pdf');
+
+      //doc.fromHTML(imgfdfdsfg, 15, 15, {
+       // 'width': 170,
+      //  'elementHandlers': specialElementHandlers
+     // });
+     // doc.output('save', 'Download.pdf');
+    }
+    
+function callAuditoMasterNo()
+{
+$.ajax({
+		async:false,
+		url:_spPageContextInfo.webAbsoluteUrl+"/_api/web/lists/getbytitle('AuditMAsterTable')/items?$select=ID,CurrentStatus",	
+		type:"GET",		
+		headers:{
+			"Accept":"application/json;odata=verbose",		
+		},
+		success:function(data){
+		        var count=data.d.results.length;
+		        var results=data.d.results;
+		         var appendstring="<option value='master value'>-- Select master value--</option>";
+		    	for(var i=0;i<count;i++){
+		    	                         var masterid=results[i].ID;
+		    	                         var CurrentStatus=results[i].CurrentStatus;
+		    	                          appendstring+="<option value='"+masterid+"'>"+masterid+"</option>";
+                                        }
+                                        $("#drpMasterNo").append(appendstring);
+                },
+        error:function(data){
+        alert("error alert");
+        }  
+        });            
+}
+$(document).on('click','#btnGenrateReport',function(){
+var AuditnoSelect=$("#drpMasterNo option:selected").val();
+AuditnoSelectfun(AuditnoSelect);
+});
+function AuditnoSelectfun(AuditnoSelect)
+{
+	$.ajax({
+		async:false,
+		url:_spPageContextInfo.webAbsoluteUrl+"/_api/web/lists/getbytitle('AuditActionTracker1')/items?$expand=AuditRefNoLookup/ID&$select=ID,TimeSlot,PersonAssign,AuditorComment,DepartmentComment,AuditRefNoLookup/ID,Priority,Observation,risk,Recommendation,Timeframe,Category,ObservationClassification&$filter=AuditRefNoLookup eq "+AuditnoSelect+"",	
+		type:"GET",		
+		headers:{
+			"Accept":"application/json;odata=verbose",		
+		},
+		success:function(data){
+		        var count=data.d.results.length;
+		        var appneend="";
+		    	for(var i=0;i<count;i++){
+		    	var OID=data.d.results[i].ID;
+				var Priority=data.d.results[i].Priority;
+				var Observation=data.d.results[i].Observation;
+                var risk=data.d.results[i].risk;             
+                var Recommendation=data.d.results[i].Recommendation;             
+                var Timeframe=data.d.results[i].Timeframe;
+                var Category=data.d.results[i].Category;              
+                var AuditorComment=data.d.results[i].AuditorComment;
+                var PersonAssign=data.d.results[i].PersonAssign;
+                var TimeSlot=data.d.results[i].TimeSlot;
+                var DepartmentComment=data.d.results[i].DepartmentComment;
+                var ObservationClassification=data.d.results[i].ObservationClassification;
+                //alert(count+OID+Priority+Category);
+                 var srno=i+1; 
+                appneend+="<div><table border='2px' width='100%'><tr><td style='background-color:#eb8c00'>"+srno+"."+Observation+"</td><td rowspan='2' style='background-color:#ffc000'>"+Priority+"</td></tr><tr><td style='background-color:#eb8c00'>Observation Classification:"+ObservationClassification+"</td></tr><tr><td colspan='2'>Observation:"+Observation+"</td></tr><tr><td colspan='2'>Risk / Impact:"+risk+"</td></tr><tr><td colspan='2'>Recommendation:"+Recommendation+"</td></tr><tr><td colspan='2'>Management Response</td></tr><tr><td>Responsibility Assigned to (by Management) : "+PersonAssign+"</td><td>Implementation timeframe:"+TimeSlot+"</td></tr><tr><td>Internal Audit Department Comments:"+DepartmentComment+"</td><td>Status Update (Internal Audit Department):"+PersonAssign+"</td></tr></table><br><br></div>";              				
+			}//end of for loop	append
+			    $("#imgoutnjappendingdiv").html(appneend);
+			},
+		error:function(data){	
+		}
+		});// ajax ended to get Validated and Printed Invoices
+}
+/*$(document).on('click','#btnConvertHtml2Image', function () {
+    imgageData = theCanvas.toDataURL("image/png");
+    var newData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
+    $("#btnConvertHtml2Image").attr("download", "your_pic_name.png").attr("href", newData);
+});*/
+/*============================================================================================================*/
+</script>  	
+<body>
+<select id="drpMasterNo"></select>
+<input type="button" id="btnGenrateReport" value="GETDATAFROM LIST IN HTML FORMATE"/>
+<br/>
+<div id="imgoutnjappendingdiv" style="display:none"></div> 
+<div id="imgoutnjappendingCanvas"><p>here canvas will be appended</p></div> 
+<div id="loadVar"></div>
+<!--<input type="button" id="btnConvertHtml2Image" value="btnConvertHtml2Image"/>--> 
+<input type="button" id="btnSaveNew" value="SaveAsNeWPDF"/>
+<input type="button" id="btngenrateCanvas" value="btn genrate Canvas"/>
+<input type="button" id="cmdFinalPDF" value="GenerateYourFinalPDF"/>
+
+<!---------                       here dynamic div will be genrated inside a statick div FOR HTML TO APPEND START                                               --->
+<div id="staticdivforElement">
+
+</div>
+<!--                       here dynamic div will be genrated inside a statick div FOR HTML TO APPEND END                                                 -->
+
+<!--                       here dynamic div will be genrated inside a statick div FOR CANVAS TO APPEND START                                             -->
+<div><iframe id="iframdiv" style="display:block">
+<div id="staticdivforCANVAS">
+
+</div>
+</iframe>
+</div>
+<!--                       here dynamic div will be genrated inside a statick div FOR CANVAS TO APPEND END                                               -->
+
+</body>
+ </html>
